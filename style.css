@@ -213,105 +213,96 @@ h1, h2, h3, .sub-heading, .massive-title {
     pointer-events: none;
 }
 
-/* ---------------- ACHIEVEMENTS SECTION ---------------- */
-.achievements-section {
-    position: relative;
-    padding: 6rem 1rem;
-    overflow: hidden;
+/* ---------------- MINIMAL ACHIEVEMENTS SECTION ---------------- */
+.minimal-achievements {
     background-color: var(--black);
     color: var(--white);
-    z-index: 1;
-}
-
-.marquee-bg {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%) rotate(-10deg);
-    width: 100vw;
-    overflow: hidden;
-    z-index: -1;
-    opacity: 0.15;
-    pointer-events: none;
-}
-
-.marquee-track {
-    display: flex;
-    width: fit-content;
-    animation: scrollMarquee 15s linear infinite;
-}
-
-.marquee-track span {
-    font-family: 'Anton', sans-serif;
-    font-size: 8rem;
-    white-space: nowrap;
-    color: var(--yellow);
-    padding-right: 2rem;
-}
-
-@keyframes scrollMarquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-.ach-content {
+    padding: 6rem 1.5rem;
     position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.text-center {
-    text-align: center;
+.minimal-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.minimal-header .massive-title {
     color: var(--yellow);
-    margin-bottom: 3rem;
-    text-shadow: 2px 2px 0px rgba(255,255,255,0.2);
-}
-
-.ach-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-    max-width: 400px;
-    padding: 0 10px;
-}
-
-.ach-card {
-    background-color: var(--cream);
-    color: var(--black);
-    padding: 1.5rem;
-    border: 4px solid var(--white);
-    box-shadow: -8px 8px 0px var(--yellow);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transform-origin: center;
-}
-
-.ach-card:nth-child(even) {
-    background-color: var(--yellow);
-    box-shadow: 8px 8px 0px var(--white);
-    border-color: var(--black);
-}
-
-.ach-icon {
-    font-size: 3.5rem;
     margin-bottom: 0.5rem;
+    text-align: left;
 }
 
-.ach-card h3 {
+.minimal-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+}
+
+.award-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.award-row {
+    position: relative;
+    padding: 2.5rem 0;
+}
+
+.award-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 0%; /* Animated by GSAP */
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.award-list .final-line {
+    position: relative;
+    margin-top: 0;
+}
+
+.award-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.text-mask {
+    overflow: hidden; /* Crucial for the slide-up reveal */
+}
+
+.award-year {
+    display: inline-block;
+    color: var(--yellow);
     font-family: 'Anton', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
 }
 
-.ach-card p {
-    font-weight: 700;
-    font-size: 1rem;
+.award-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    letter-spacing: 1px;
+    color: var(--white);
+}
+
+.award-event {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
 }
 
 /* ---------------- FOOTER ---------------- */

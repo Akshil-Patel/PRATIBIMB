@@ -81,27 +81,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ==========================================
-    // ACHIEVEMENTS SECTION (Slap-Down Effect)
+    // MINIMAL ACHIEVEMENTS SECTION (Mask Reveal)
     // ==========================================
-    const achCards = gsap.utils.toArray('.ach-card');
-    
-    achCards.forEach((card, i) => {
-        // Alternate slight final rotation
-        const targetRotation = i % 2 === 0 ? -4 : 4;
-        gsap.set(card, { rotation: targetRotation });
-        
-        gsap.from(card, {
+    const awardRows = gsap.utils.toArray('.award-row:not(:last-child)'); // exclude the final line div if it's separate, but it's technically in the list. Wait, .award-row covers the actual rows.
+
+    awardRows.forEach((row) => {
+        const line = row.querySelector('.award-line');
+        const textElements = row.querySelectorAll('.text-mask > *');
+
+        const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: card,
-                start: "top 85%", // Trigger when the top of the card hits 85% down the viewport
+                trigger: row,
+                start: "top 85%", 
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // 1. Draw the top line
+        tl.to(line, {
+            width: "100%",
+            duration: 0.6,
+            ease: "power3.inOut"
+        })
+        // 2. Reveal text from bottom with slight skew
+        .from(textElements, {
+            y: "150%",
+            skewY: 5,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power3.out"
+        }, "-=0.3");
+    });
+    
+    // Animate the final closing line
+    const finalLine = document.querySelector('.award-list > .final-line');
+    if (finalLine) {
+        gsap.to(finalLine, {
+            scrollTrigger: {
+                trigger: finalLine,
+                start: "top 90%",
                 toggleActions: "play none none reverse"
             },
-            y: 100, // Slide up from bottom
-            scale: 1.5, // Start large
-            opacity: 0,
-            rotation: targetRotation * 6, // Starts with exaggerated rotation
-            duration: 0.8,
-            ease: "back.out(1.7)" // Elastic slapping down effect
+            width: "100%",
+            duration: 0.6,
+            ease: "power3.inOut"
         });
-    });
+    }
 });
