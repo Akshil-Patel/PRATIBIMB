@@ -111,6 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
             stagger: 0.1,
             ease: "power3.out"
         }, "-=0.3");
+
+        // 3. Scroll-driven Photo Reveal (Accordion effect)
+        ScrollTrigger.create({
+            trigger: row,
+            start: "top center+=50", // Becomes active near center
+            end: "bottom center-=50", 
+            toggleClass: "is-active"
+        });
     });
     
     // Animate the final closing line
