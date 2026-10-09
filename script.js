@@ -79,4 +79,29 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     });
+
+    // ==========================================
+    // ACHIEVEMENTS SECTION (Slap-Down Effect)
+    // ==========================================
+    const achCards = gsap.utils.toArray('.ach-card');
+    
+    achCards.forEach((card, i) => {
+        // Alternate slight final rotation
+        const targetRotation = i % 2 === 0 ? -4 : 4;
+        gsap.set(card, { rotation: targetRotation });
+        
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top 85%", // Trigger when the top of the card hits 85% down the viewport
+                toggleActions: "play none none reverse"
+            },
+            y: 100, // Slide up from bottom
+            scale: 1.5, // Start large
+            opacity: 0,
+            rotation: targetRotation * 6, // Starts with exaggerated rotation
+            duration: 0.8,
+            ease: "back.out(1.7)" // Elastic slapping down effect
+        });
+    });
 });

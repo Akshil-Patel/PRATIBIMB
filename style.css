@@ -213,6 +213,107 @@ h1, h2, h3, .sub-heading, .massive-title {
     pointer-events: none;
 }
 
+/* ---------------- ACHIEVEMENTS SECTION ---------------- */
+.achievements-section {
+    position: relative;
+    padding: 6rem 1rem;
+    overflow: hidden;
+    background-color: var(--black);
+    color: var(--white);
+    z-index: 1;
+}
+
+.marquee-bg {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) rotate(-10deg);
+    width: 100vw;
+    overflow: hidden;
+    z-index: -1;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.marquee-track {
+    display: flex;
+    width: fit-content;
+    animation: scrollMarquee 15s linear infinite;
+}
+
+.marquee-track span {
+    font-family: 'Anton', sans-serif;
+    font-size: 8rem;
+    white-space: nowrap;
+    color: var(--yellow);
+    padding-right: 2rem;
+}
+
+@keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.ach-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+    color: var(--yellow);
+    margin-bottom: 3rem;
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.2);
+}
+
+.ach-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 0 10px;
+}
+
+.ach-card {
+    background-color: var(--cream);
+    color: var(--black);
+    padding: 1.5rem;
+    border: 4px solid var(--white);
+    box-shadow: -8px 8px 0px var(--yellow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform-origin: center;
+}
+
+.ach-card:nth-child(even) {
+    background-color: var(--yellow);
+    box-shadow: 8px 8px 0px var(--white);
+    border-color: var(--black);
+}
+
+.ach-icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.ach-card h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.ach-card p {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
 /* ---------------- FOOTER ---------------- */
 footer {
     background-color: var(--black);
