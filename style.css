@@ -1,0 +1,236 @@
+/* CSS RESET & VARIABLES */
+:root {
+    --black: #050505;
+    --cream: #f4f0e1;
+    --yellow: #eab308;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--cream);
+    color: var(--black);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .sub-heading, .massive-title {
+    font-family: 'Anton', sans-serif;
+    text-transform: uppercase;
+}
+
+/* ---------------- HERO SECTION ---------------- */
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--black);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.hero-bg-accent {
+    position: absolute;
+    top: -20%;
+    left: -50%;
+    width: 200%;
+    height: 50%;
+    background-color: var(--yellow);
+    transform: rotate(-15deg);
+    z-index: 1;
+    mix-blend-mode: multiply;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    transform: rotate(-5deg);
+}
+
+.sub-heading {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    color: var(--cream);
+}
+
+.main-heading {
+    font-size: 4.5rem;
+    line-height: 1;
+    letter-spacing: 2px;
+    text-shadow: 4px 4px 0px rgba(255,255,255,0.1);
+}
+
+.highlight {
+    color: var(--yellow);
+}
+
+.tagline {
+    font-weight: 700;
+    letter-spacing: 5px;
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.scroll-prompt {
+    position: absolute;
+    bottom: 40px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* ---------------- DEDICATED ART SECTIONS ---------------- */
+.art-section {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Hide horizontal overflow for the pinning effect */
+    position: relative;
+}
+
+.pin-wrap {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    /* Width will be dynamic based on content, but we make it fit its children */
+    width: fit-content; 
+    padding-right: 10vw; /* padding at the end of scroll */
+}
+
+/* THEMES */
+.theme-dark { background-color: var(--black); color: var(--white); }
+.theme-dark .massive-title { color: var(--yellow); }
+
+.theme-yellow { background-color: var(--yellow); color: var(--black); }
+.theme-yellow .massive-title { color: var(--black); text-shadow: 2px 2px 0px var(--white); }
+
+.theme-light { background-color: var(--cream); color: var(--black); }
+.theme-light .massive-title { color: var(--black); }
+
+/* Section Intro */
+.section-intro {
+    width: 100vw; /* Takes up full mobile screen */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.massive-title {
+    font-size: 4.5rem;
+    line-height: 0.9;
+    margin-bottom: 20px;
+}
+
+.section-desc {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    max-width: 90%;
+    font-weight: 600;
+}
+
+.swipe-hint {
+    margin-top: 30px;
+    font-family: 'Anton', sans-serif;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    opacity: 0.6;
+    display: inline-block;
+    animation: slide 2s infinite;
+}
+
+@keyframes slide {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+}
+
+/* Media Cards */
+.media-container {
+    display: flex;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.media-card {
+    width: 75vw; /* Fills most of the mobile screen */
+    height: 60vh;
+    border-radius: 12px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 10px 10px 25px rgba(0,0,0,0.3);
+}
+
+.theme-dark .media-card { border: 4px solid var(--white); background: #111; }
+.theme-yellow .media-card { border: 4px solid var(--black); background: #e0a300; }
+.theme-light .media-card { border: 4px solid var(--black); background: #e0dcca; }
+
+.placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.5rem;
+    opacity: 0.5;
+}
+
+/* You can style video vs photo cards differently if needed */
+.video-card::after {
+    content: '▶';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: rgba(255,255,255,0.7);
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    pointer-events: none;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer {
+    background-color: var(--black);
+    color: var(--yellow);
+    text-align: center;
+    padding: 4rem 1rem;
+    border-top: 5px solid var(--yellow);
+    position: relative;
+    z-index: 10;
+}
+
+footer h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: var(--cream);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
