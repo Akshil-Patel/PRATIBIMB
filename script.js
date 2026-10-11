@@ -261,6 +261,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const pinWrap = troupeSection.querySelector(".pin-wrap");
         const mediaCards = troupeSection.querySelectorAll(".media-card");
 
+        // Ensure all cards are fully visible immediately
+        mediaCards.forEach((card) => {
+            card.style.opacity = "1";
+            card.style.visibility = "visible";
+        });
+
         const getScrollAmount = () => -(pinWrap.scrollWidth - window.innerWidth);
 
         const troupeTween = gsap.to(pinWrap, {
@@ -271,28 +277,18 @@ document.addEventListener("DOMContentLoaded", () => {
         ScrollTrigger.create({
             trigger: troupeSection,
             start: "top top",
-            end: () => `+=${pinWrap.scrollWidth}`,
+            end: () => `+=${Math.max(pinWrap.scrollWidth - window.innerWidth, window.innerHeight)}`,
             pin: true,
             animation: troupeTween,
             scrub: 1,
             invalidateOnRefresh: true
         });
-
-        // Parallax entrance tilt for group photo cards
-        mediaCards.forEach((card, i) => {
-            gsap.from(card, {
-                opacity: 0,
-                scale: 0.85,
-                rotation: i % 2 === 0 ? 5 : -5,
-                scrollTrigger: {
-                    trigger: card,
-                    containerAnimation: troupeTween,
-                    start: "left center+=250",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
     }
+
+    // Refresh layout once all media (videos and photos) are loaded
+    window.addEventListener("load", () => {
+        ScrollTrigger.refresh();
+    });
 
     // ==========================================
     // 5. LIGHTBOX MODAL (FOR GROUP PHOTOS)
