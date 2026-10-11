@@ -5,148 +5,363 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PRATIBIMB | The Oldest Dramatics Society</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="fullscreen-body">
 
-    <!-- HERO SECTION (Kept the great opening animation) -->
-    <section class="hero">
+    <!-- TOP FLOATING NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">PRATI<span>BIMB</span></a>
+            
+            <nav class="nav-links">
+                <a href="#home" class="nav-link" data-nav="home">Home</a>
+                <a href="#intro-video" class="nav-link" data-nav="intro-video">Intro</a>
+                <a href="#skit-video" class="nav-link" data-nav="skit-video">Skit</a>
+                <a href="#streetplay-video" class="nav-link" data-nav="streetplay-video">Street Play</a>
+                <a href="#madads-video" class="nav-link" data-nav="madads-video">Mad Ads</a>
+                <a href="#troupe" class="nav-link" data-nav="troupe">The Troupe</a>
+                <a href="#join" class="nav-link" data-nav="join">Auditions</a>
+            </nav>
+
+            <div class="nav-right">
+                <!-- Global Sound Master Toggle -->
+                <button class="global-sound-btn" id="globalSoundToggle" aria-label="Toggle Global Audio">
+                    <span class="sound-icon-wrapper">
+                        <svg class="icon-sound-off" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                        </svg>
+                        <svg class="icon-sound-on" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                    </span>
+                    <span class="sound-text">SOUND OFF</span>
+                </button>
+
+                <a href="https://forms.gle/7YREsNiMwd5yBeB37" target="_blank" class="nav-cta-btn">Join Us</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FULLSCREEN SECTION 1: HERO SCENE -->
+    <section class="fullscreen-section hero-section" id="home">
         <div class="hero-bg-accent"></div>
         <div class="hero-content">
             <h2 class="sub-heading">THE OLDEST DRAMATICS SOCIETY</h2>
             <h1 class="main-heading">PRATI<span class="highlight">BIMB</span></h1>
             <p class="tagline">REFLECTION</p>
+            <div class="hero-badges">
+                <span class="badge">EST. LEGACY</span>
+                <span class="badge">STAGE • STREET • SATIRE</span>
+            </div>
         </div>
         
         <div class="scroll-prompt">
             <div class="mouse"></div>
-            <p>SWIPE DOWN</p>
+            <p>SCROLL TO WITNESS</p>
         </div>
     </section>
 
-    <!-- DEDICATED SECTION 1: SKIT -->
-    <section class="art-section theme-dark" id="skit">
+    <!-- FULLSCREEN SECTION 2: TEAM INTRO VIDEO SCENE -->
+    <section class="fullscreen-section video-scene-section" id="intro-video" data-video-section>
+        <div class="video-media-wrapper">
+            <!-- Ambient blurred backdrop for edge-to-edge screen fill -->
+            <video class="video-bg-ambient" src="Pratibimb intro.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
+            <!-- Crisp main full-screen video -->
+            <video class="video-foreground" src="Pratibimb intro.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Team Introduction Video"></video>
+        </div>
+
+        <!-- Cinema HUD Overlay -->
+        <div class="video-overlay-hud">
+            <div class="hud-top">
+                <span class="hud-tag">[ WHO WE ARE ]</span>
+                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
+                    <span class="sound-pill">
+                        <span class="sound-icon-symbol">🔇</span>
+                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
+                    </span>
+                </button>
+            </div>
+
+            <div class="hud-center" data-action="toggle-play">
+                <div class="play-pulse-circle">
+                    <svg class="pulse-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    <svg class="pulse-pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                </div>
+            </div>
+
+            <div class="hud-bottom">
+                <div class="hud-info">
+                    <div class="hud-badge-row">
+                        <span class="hud-badge">THE SOCIETY</span>
+                        <span class="hud-status-indicator">● INTRODUCING THE TEAM</span>
+                    </div>
+                    <h2 class="hud-title">MEET PRATIBIMB</h2>
+                    <p class="hud-desc">Decades of raw storytelling, stage intensity, and street revolution. Witness our heartbeat.</p>
+                </div>
+
+                <div class="hud-controls-row">
+                    <button class="hud-action-btn play-pause-action" aria-label="Play or Pause" data-action="toggle-play">
+                        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <div class="hud-timeline-bar" data-action="seek">
+                        <div class="hud-timeline-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLSCREEN SECTION 3: ART FORM 1 - SKIT VIDEO SCENE -->
+    <section class="fullscreen-section video-scene-section" id="skit-video" data-video-section>
+        <div class="video-media-wrapper">
+            <video class="video-bg-ambient" src="Skit.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
+            <video class="video-foreground" src="Skit.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Skit Introduction Video"></video>
+        </div>
+
+        <div class="video-overlay-hud">
+            <div class="hud-top">
+                <span class="hud-tag">[ 01 • ART FORM ]</span>
+                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
+                    <span class="sound-pill">
+                        <span class="sound-icon-symbol">🔇</span>
+                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
+                    </span>
+                </button>
+            </div>
+
+            <div class="hud-center" data-action="toggle-play">
+                <div class="play-pulse-circle">
+                    <svg class="pulse-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    <svg class="pulse-pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                </div>
+            </div>
+
+            <div class="hud-bottom">
+                <div class="hud-info">
+                    <div class="hud-badge-row">
+                        <span class="hud-badge">STAGE CRAFT</span>
+                        <span class="hud-status-indicator">● THEATRE PLAY</span>
+                    </div>
+                    <h2 class="hud-title">SKIT</h2>
+                    <p class="hud-desc">Stage performances rich in dialogue, emotion, and character immersion under the spotlight.</p>
+                </div>
+
+                <div class="hud-controls-row">
+                    <button class="hud-action-btn play-pause-action" aria-label="Play or Pause" data-action="toggle-play">
+                        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <div class="hud-timeline-bar" data-action="seek">
+                        <div class="hud-timeline-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLSCREEN SECTION 4: ART FORM 2 - STREET PLAY VIDEO SCENE -->
+    <section class="fullscreen-section video-scene-section" id="streetplay-video" data-video-section>
+        <div class="video-media-wrapper">
+            <video class="video-bg-ambient" src="Streetplay.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
+            <video class="video-foreground" src="Streetplay.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Street Play Introduction Video"></video>
+        </div>
+
+        <div class="video-overlay-hud">
+            <div class="hud-top">
+                <span class="hud-tag">[ 02 • ART FORM ]</span>
+                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
+                    <span class="sound-pill">
+                        <span class="sound-icon-symbol">🔇</span>
+                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
+                    </span>
+                </button>
+            </div>
+
+            <div class="hud-center" data-action="toggle-play">
+                <div class="play-pulse-circle">
+                    <svg class="pulse-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    <svg class="pulse-pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                </div>
+            </div>
+
+            <div class="hud-bottom">
+                <div class="hud-info">
+                    <div class="hud-badge-row">
+                        <span class="hud-badge">NUKKAD NATAK</span>
+                        <span class="hud-status-indicator">● CIRCLE OF PASSION</span>
+                    </div>
+                    <h2 class="hud-title">STREET PLAY</h2>
+                    <p class="hud-desc">Raw vocals, pounding dafli rhythms, and fiery energy on open grounds confronting societal truths.</p>
+                </div>
+
+                <div class="hud-controls-row">
+                    <button class="hud-action-btn play-pause-action" aria-label="Play or Pause" data-action="toggle-play">
+                        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <div class="hud-timeline-bar" data-action="seek">
+                        <div class="hud-timeline-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLSCREEN SECTION 5: ART FORM 3 - MAD ADS VIDEO SCENE -->
+    <section class="fullscreen-section video-scene-section" id="madads-video" data-video-section>
+        <div class="video-media-wrapper">
+            <video class="video-bg-ambient" src="Mad-Ads.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
+            <video class="video-foreground" src="Mad-Ads.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Mad Ads Introduction Video"></video>
+        </div>
+
+        <div class="video-overlay-hud">
+            <div class="hud-top">
+                <span class="hud-tag">[ 03 • ART FORM ]</span>
+                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
+                    <span class="sound-pill">
+                        <span class="sound-icon-symbol">🔇</span>
+                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
+                    </span>
+                </button>
+            </div>
+
+            <div class="hud-center" data-action="toggle-play">
+                <div class="play-pulse-circle">
+                    <svg class="pulse-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    <svg class="pulse-pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                </div>
+            </div>
+
+            <div class="hud-bottom">
+                <div class="hud-info">
+                    <div class="hud-badge-row">
+                        <span class="hud-badge">SATIRE & COMEDY</span>
+                        <span class="hud-status-indicator">● MADNESS UNLEASHED</span>
+                    </div>
+                    <h2 class="hud-title">MAD ADS</h2>
+                    <p class="hud-desc">Hilarious parodies, absurd commercials, witty wordplay, and non-stop theatrical humor.</p>
+                </div>
+
+                <div class="hud-controls-row">
+                    <button class="hud-action-btn play-pause-action" aria-label="Play or Pause" data-action="toggle-play">
+                        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <div class="hud-timeline-bar" data-action="seek">
+                        <div class="hud-timeline-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLSCREEN SECTION 6: THE TROUPE (PINNED FULLSCREEN HORIZONTAL GALLERY) -->
+    <section class="fullscreen-section troupe-section theme-yellow" id="troupe">
         <div class="pin-wrap">
-            <div class="section-intro">
-                <h2 class="massive-title">SKIT</h2>
-                <p class="section-desc">Stage performances full of drama, emotion, and intense storytelling. We bring characters to life.</p>
-                <div class="swipe-hint">Keep swiping &rarr;</div>
-            </div>
-            <div class="media-container">
-                <!-- Replace placeholders with actual images/videos -->
-                <div class="media-card photo-card"><div class="placeholder">📸 Photo</div></div>
-                <div class="media-card video-card"><div class="placeholder">🎥 Video</div></div>
-                <div class="media-card photo-card"><div class="placeholder">📸 Photo</div></div>
-                <div class="media-card video-card"><div class="placeholder">🎥 Video</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DEDICATED SECTION 2: STREETPLAY -->
-    <section class="art-section theme-yellow" id="streetplay">
-        <div class="pin-wrap">
-            <div class="section-intro">
-                <h2 class="massive-title">STREET<br>PLAY</h2>
-                <p class="section-desc">Raw, energetic, and voice-driven acts performing on open grounds to spark social change.</p>
-                <div class="swipe-hint">Keep swiping &rarr;</div>
-            </div>
-            <div class="media-container">
-                <div class="media-card photo-card"><div class="placeholder">📸 Photo</div></div>
-                <div class="media-card video-card"><div class="placeholder">🎥 Video</div></div>
-                <div class="media-card photo-card"><div class="placeholder">📸 Photo</div></div>
-                <div class="media-card photo-card"><div class="placeholder">📸 Photo</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DEDICATED SECTION 3: MADADS -->
-    <section class="art-section theme-light" id="madads">
-        <div class="pin-wrap">
-            <div class="section-intro">
-                <h2 class="massive-title">MAD<br>ADS</h2>
-                <p class="section-desc">Humorous, creative, and quirky performances pitching imaginary or downright hilarious products.</p>
-                <div class="swipe-hint">Keep swiping &rarr;</div>
-            </div>
-            <div class="media-container">
-                <div class="media-card photo-card"><div class="placeholder">📸 Photo</div></div>
-                <div class="media-card video-card"><div class="placeholder">🎥 Video</div></div>
-                <div class="media-card video-card"><div class="placeholder">🎥 Video</div></div>
-                <div class="media-card photo-card"><div class="placeholder">📸 Photo</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MINIMAL ACHIEVEMENTS SECTION -->
-    <section class="minimal-achievements theme-dark" id="achievements">
-        <div class="minimal-container">
-            <div class="minimal-header">
-                <h2 class="massive-title">THE GLORY</h2>
-                <p class="minimal-subtitle">A legacy of excellence.</p>
-            </div>
             
-            <div class="award-list">
-                <div class="award-row">
-                    <div class="award-line"></div>
-                    <div class="award-content">
-                        <div class="text-mask"><span class="award-year">2024</span></div>
-                        <div class="text-mask"><h3 class="award-title">1ST PRIZE</h3></div>
-                        <div class="text-mask"><p class="award-event">Mood Indigo • Streetplay</p></div>
-                        <!-- Expanding photo area -->
-                        <div class="award-photo">
-                            <div class="placeholder-box">📸</div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Section Intro Card -->
+            <div class="troupe-intro-card">
+                <span class="section-tag-dark">[ THE ENSEMBLE ]</span>
+                <h2 class="massive-title">THE<br>TROUPE</h2>
+                <p class="troupe-desc">
+                    The actors, directors, writers, and artists who breathe life into every performance. United by sweat, stage lights, and an unbroken bond.
+                </p>
+                <div class="swipe-hint">Keep scrolling &rarr;</div>
+            </div>
+
+            <!-- Group Photo Cards -->
+            <div class="media-container">
                 
-                <div class="award-row">
-                    <div class="award-line"></div>
-                    <div class="award-content">
-                        <div class="text-mask"><span class="award-year">2023</span></div>
-                        <div class="text-mask"><h3 class="award-title">BEST SCRIPT</h3></div>
-                        <div class="text-mask"><p class="award-event">Antaragni • Skit</p></div>
-                        <div class="award-photo">
-                            <div class="placeholder-box">📸</div>
-                        </div>
+                <!-- Group Photo 1 -->
+                <div class="media-card photo-card" data-lightbox="1.jpeg" data-caption="The Pratibimb Ensemble">
+                    <img src="1.jpeg" alt="Pratibimb Troupe Group Photo 1" class="card-img" loading="lazy">
+                    <div class="card-badge">01 • THE ENSEMBLE</div>
+                    <div class="card-overlay">
+                        <h4>THE ENSEMBLE</h4>
+                        <p>Annual Production Crew</p>
                     </div>
                 </div>
 
-                <div class="award-row">
-                    <div class="award-line"></div>
-                    <div class="award-content">
-                        <div class="text-mask"><span class="award-year">2024</span></div>
-                        <div class="text-mask"><h3 class="award-title">BEST ACTOR</h3></div>
-                        <div class="text-mask"><p class="award-event">Oasis • MadAds</p></div>
-                        <div class="award-photo">
-                            <div class="placeholder-box">📸</div>
-                        </div>
+                <!-- Group Photo 2 -->
+                <div class="media-card photo-card" data-lightbox="2.jpeg" data-caption="Curtain Call Celebrations">
+                    <img src="2.jpeg" alt="Pratibimb Troupe Group Photo 2" class="card-img" loading="lazy">
+                    <div class="card-badge">02 • CURTAIN CALL</div>
+                    <div class="card-overlay">
+                        <h4>CURTAIN CALL</h4>
+                        <p>Post-Stage Euphoria</p>
                     </div>
                 </div>
 
-                <div class="award-row">
-                    <div class="award-line"></div>
-                    <div class="award-content">
-                        <div class="text-mask"><span class="award-year">2025</span></div>
-                        <div class="text-mask"><h3 class="award-title">CHAMPIONS</h3></div>
-                        <div class="text-mask"><p class="award-event">National Fest • Overall</p></div>
-                        <div class="award-photo">
-                            <div class="placeholder-box">📸</div>
-                        </div>
+                <!-- Group Photo 3 -->
+                <div class="media-card photo-card" data-lightbox="3.jpeg" data-caption="Nukkad Squad Force">
+                    <img src="3.jpeg" alt="Pratibimb Troupe Group Photo 3" class="card-img" loading="lazy">
+                    <div class="card-badge">03 • NUKKAD SQUAD</div>
+                    <div class="card-overlay">
+                        <h4>NUKKAD SQUAD</h4>
+                        <p>Voices of the Circle</p>
                     </div>
                 </div>
-                <div class="award-line final-line"></div>
+
+                <!-- Group Photo 4 -->
+                <div class="media-card photo-card" data-lightbox="4.jpeg" data-caption="Fest Champions Assembly">
+                    <img src="4.jpeg" alt="Pratibimb Troupe Group Photo 4" class="card-img" loading="lazy">
+                    <div class="card-badge">04 • TRIUMPH</div>
+                    <div class="card-overlay">
+                        <h4>TRIUMPH</h4>
+                        <p>Fest Trophies & Glory</p>
+                    </div>
+                </div>
+
+                <!-- Group Photo 6 -->
+                <div class="media-card photo-card" data-lightbox="6.jpeg" data-caption="One Big Family">
+                    <img src="6.jpeg" alt="Pratibimb Troupe Group Photo 6" class="card-img" loading="lazy">
+                    <div class="card-badge">05 • ONE FAMILY</div>
+                    <div class="card-overlay">
+                        <h4>ONE FAMILY</h4>
+                        <p>Bond Beyond the Stage</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <h2>PRATIBIMB</h2>
-        <p>Join the legacy. Unleash the drama.</p>
-    </footer>
+    <!-- FULLSCREEN SECTION 7: FINALE & AUDITIONS SCENE -->
+    <section class="fullscreen-section finale-section" id="join">
+        <div class="finale-bg-glow"></div>
+        <div class="finale-content">
+            <span class="section-tag">[ STEP INTO THE LIGHT ]</span>
+            <h2 class="finale-heading">BECOME THE<br><span class="highlight">REFLECTION</span></h2>
+            <p class="finale-desc">Auditions are now officially open. Bring your voice, your vulnerability, and your fire to the stage.</p>
+            
+            <div class="finale-actions">
+                <a href="https://forms.gle/7YREsNiMwd5yBeB37" target="_blank" class="finale-register-btn">
+                    REGISTER FOR AUDITIONS
+                </a>
+                <a href="#home" class="finale-top-btn">&uarr; BACK TO TOP</a>
+            </div>
 
-    <!-- FLOATING REGISTRATION BUTTON -->
+            <footer class="finale-footer">
+                <p class="finale-copy">&copy; 2026 Pratibimb Dramatics Society. All rights reserved.</p>
+            </footer>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX MODAL (FOR GROUP PHOTOS) -->
+    <div class="lightbox-modal" id="lightboxModal" aria-hidden="true" role="dialog">
+        <button class="lightbox-close" aria-label="Close photo preview">&times;</button>
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-image" id="lightboxImg">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <!-- FLOATING AUDITION CTA -->
     <a href="https://forms.gle/7YREsNiMwd5yBeB37" target="_blank" class="floating-register-btn" aria-label="Register for Auditions">
-        REGISTER NOW
+        <span class="btn-text">AUDITIONS OPEN</span>
+        <span class="btn-sub">REGISTER NOW &rarr;</span>
     </a>
 
     <!-- GSAP and ScrollTrigger -->
