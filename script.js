@@ -39,61 +39,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }, "-=0.2");
 
     // ==========================================
-    // 2. GLOBAL AUDIO MANAGEMENT
+    // 2. USER GESTURE UNMUTED AUDIO UNLOCKER
     // ==========================================
-    let isGlobalAudioOn = false;
-    const globalSoundBtn = document.getElementById("globalSoundToggle");
-    const globalSoundText = globalSoundBtn ? globalSoundBtn.querySelector(".sound-text") : null;
-    const videoSections = document.querySelectorAll("[data-video-section]");
-
-    const updateAudioUI = () => {
-        if (globalSoundBtn) {
-            if (isGlobalAudioOn) {
-                globalSoundBtn.classList.add("is-sound-on");
-                if (globalSoundText) globalSoundText.textContent = "SOUND ON";
-            } else {
-                globalSoundBtn.classList.remove("is-sound-on");
-                if (globalSoundText) globalSoundText.textContent = "SOUND OFF";
+    // Browsers require a user interaction (click/touch/scroll) before unmuted playback
+    let userHasInteracted = false;
+    const unlockAudio = () => {
+        if (userHasInteracted) return;
+        userHasInteracted = true;
+        document.querySelectorAll(".video-foreground").forEach((v) => {
+            v.muted = false;
+        });
+        if (currentlyActiveSection) {
+            const activeFg = currentlyActiveSection.querySelector(".video-foreground");
+            if (activeFg) {
+                activeFg.muted = false;
+                activeFg.play().catch(() => {});
             }
         }
-
-        // Update all scene sound buttons
-        videoSections.forEach((section) => {
-            const soundLabel = section.querySelector(".sound-status-label");
-            const soundIcon = section.querySelector(".sound-icon-symbol");
-            const fgVideo = section.querySelector(".video-foreground");
-
-            if (isGlobalAudioOn) {
-                section.classList.add("is-unmuted");
-                if (soundLabel) soundLabel.textContent = "SOUND ACTIVE";
-                if (soundIcon) soundIcon.textContent = "🔊";
-                if (fgVideo && !section.classList.contains("is-paused")) {
-                    fgVideo.muted = false;
-                }
-            } else {
-                section.classList.remove("is-unmuted");
-                if (soundLabel) soundLabel.textContent = "MUTED • TAP TO UNMUTE";
-                if (soundIcon) soundIcon.textContent = "🔇";
-                if (fgVideo) {
-                    fgVideo.muted = true;
-                }
-            }
-        });
     };
 
-    const toggleGlobalAudio = () => {
-        isGlobalAudioOn = !isGlobalAudioOn;
-        updateAudioUI();
-    };
-
-    if (globalSoundBtn) {
-        globalSoundBtn.addEventListener("click", toggleGlobalAudio);
-    }
+    ["pointerdown", "click", "touchstart", "keydown", "wheel"].forEach((evt) => {
+        window.addEventListener(evt, unlockAudio, { once: true, passive: true });
+    });
 
     // ==========================================
-    // 3. FULLSCREEN VIDEOS - STICK TO TOP & AUTOPLAY
+    // 3. FULLSCREEN VIDEOS - STICK TO TOP & AUTOPLAY (UNMUTED)
     // ==========================================
     let currentlyActiveSection = null;
+    const videoSections = document.querySelectorAll("[data-video-section]");
 
     const playVideoSection = (section) => {
         if (!section) return;
@@ -101,7 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const bgVideo = section.querySelector(".video-bg-ambient");
 
         if (fgVideo) {
-            fgVideo.muted = !isGlobalAudioOn;
+            // Keep videos unmuted only
+            fgVideo.muted = false;
             
             const playPromise = fgVideo.play();
             if (playPromise !== undefined) {
@@ -109,7 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     section.classList.add("is-playing");
                     section.classList.remove("is-paused");
                 }).catch((err) => {
-                    console.log("Autoplay waiting for interaction:", err);
+                    console.log("Unmuted autoplay restricted prior to interaction. Retrying on user interaction:", err);
+                    // Fallback: play muted temporarily until interaction, then unlockAudio() unmutes it immediately
                     fgVideo.muted = true;
                     fgVideo.play().then(() => {
                         section.classList.add("is-playing");
@@ -146,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         currentlyActiveSection = section;
         playVideoSection(section);
-        updateNavState(section.id);
     };
 
     const deactivateSection = (section) => {
@@ -162,24 +136,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const bgVideo = section.querySelector(".video-bg-ambient");
         const timelineFill = section.querySelector(".hud-timeline-fill");
         const timelineBar = section.querySelector(".hud-timeline-bar");
-        const soundBtn = section.querySelector(".scene-sound-btn");
         const playBtn = section.querySelector(".play-pause-action");
         const hudCenter = section.querySelector(".hud-center");
 
-        // Sound button click inside scene
-        if (soundBtn) {
-            soundBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                toggleGlobalAudio();
-            });
-        }
+        // Keep foreground video unmuted by default
+        if (fgVideo) fgVideo.muted = false;
 
         // Tap on video or center or play button to toggle play/pause
         const handlePlayToggle = (e) => {
             if (e) e.stopPropagation();
             if (!fgVideo) return;
 
+            unlockAudio();
+
             if (fgVideo.paused) {
+                fgVideo.muted = false;
                 fgVideo.play().then(() => {
                     section.classList.add("is-playing");
                     section.classList.remove("is-paused");
@@ -211,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (timelineBar && fgVideo) {
             timelineBar.addEventListener("click", (e) => {
                 e.stopPropagation();
+                unlockAudio();
                 const rect = timelineBar.getBoundingClientRect();
                 const pos = (e.clientX - rect.left) / rect.width;
                 if (fgVideo.duration) {
@@ -220,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // PIN TO TOP: When user scrolls to video, it sticks to the top of the screen and plays!
+        // PIN TO TOP: Video sticks to the top of the screen and covers the screen nicely
         ScrollTrigger.create({
             trigger: section,
             start: "top top",
@@ -236,33 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ==========================================
-    // 4. NAVBAR ACTIVE LINK TRACKING
-    // ==========================================
-    const allSections = document.querySelectorAll(".fullscreen-section");
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    function updateNavState(currentId) {
-        navLinks.forEach((link) => {
-            if (link.dataset.nav === currentId) {
-                link.classList.add("is-active");
-            } else {
-                link.classList.remove("is-active");
-            }
-        });
-    }
-
-    allSections.forEach((sec) => {
-        ScrollTrigger.create({
-            trigger: sec,
-            start: "top center",
-            end: "bottom center",
-            onEnter: () => updateNavState(sec.id),
-            onEnterBack: () => updateNavState(sec.id)
-        });
-    });
-
-    // ==========================================
-    // 5. THE TROUPE - PINNED HORIZONTAL GALLERY
+    // 4. THE TROUPE - PINNED HORIZONTAL GALLERY
     // ==========================================
     const troupeSection = document.querySelector(".troupe-section#troupe");
 
@@ -304,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 6. LIGHTBOX MODAL (FOR GROUP PHOTOS)
+    // 5. LIGHTBOX MODAL (FOR GROUP PHOTOS)
     // ==========================================
     const lightboxModal = document.getElementById("lightboxModal");
     const lightboxImg = document.getElementById("lightboxImg");
@@ -359,9 +305,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === " " && !lightboxModal.classList.contains("is-open")) {
             if (currentlyActiveSection) {
                 e.preventDefault();
+                unlockAudio();
                 const fg = currentlyActiveSection.querySelector(".video-foreground");
                 if (fg) {
                     if (fg.paused) {
+                        fg.muted = false;
                         fg.play();
                         currentlyActiveSection.classList.add("is-playing");
                         currentlyActiveSection.classList.remove("is-paused");

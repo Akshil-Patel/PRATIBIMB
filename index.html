@@ -9,40 +9,6 @@
 </head>
 <body class="fullscreen-body">
 
-    <!-- TOP FLOATING NAVBAR -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="#home" class="nav-logo">PRATI<span>BIMB</span></a>
-            
-            <nav class="nav-links">
-                <a href="#home" class="nav-link" data-nav="home">Home</a>
-                <a href="#intro-video" class="nav-link" data-nav="intro-video">Intro</a>
-                <a href="#skit-video" class="nav-link" data-nav="skit-video">Skit</a>
-                <a href="#streetplay-video" class="nav-link" data-nav="streetplay-video">Street Play</a>
-                <a href="#madads-video" class="nav-link" data-nav="madads-video">Mad Ads</a>
-                <a href="#troupe" class="nav-link" data-nav="troupe">The Troupe</a>
-                <a href="#join" class="nav-link" data-nav="join">Auditions</a>
-            </nav>
-
-            <div class="nav-right">
-                <!-- Global Sound Master Toggle -->
-                <button class="global-sound-btn" id="globalSoundToggle" aria-label="Toggle Global Audio">
-                    <span class="sound-icon-wrapper">
-                        <svg class="icon-sound-off" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="icon-sound-on" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                        </svg>
-                    </span>
-                    <span class="sound-text">SOUND OFF</span>
-                </button>
-
-                <a href="https://forms.gle/7YREsNiMwd5yBeB37" target="_blank" class="nav-cta-btn">Join Us</a>
-            </div>
-        </div>
-    </header>
-
     <!-- FULLSCREEN SECTION 1: HERO SCENE -->
     <section class="fullscreen-section hero-section" id="home">
         <div class="hero-bg-accent"></div>
@@ -67,20 +33,14 @@
         <div class="video-media-wrapper">
             <!-- Ambient blurred backdrop for edge-to-edge screen fill -->
             <video class="video-bg-ambient" src="Pratibimb intro.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
-            <!-- Crisp main full-screen video -->
-            <video class="video-foreground" src="Pratibimb intro.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Team Introduction Video"></video>
+            <!-- Crisp main full-screen video (unmuted) -->
+            <video class="video-foreground" src="Pratibimb intro.mp4" playsinline webkit-playsinline loop preload="auto" aria-label="Team Introduction Video"></video>
         </div>
 
         <!-- Cinema HUD Overlay -->
         <div class="video-overlay-hud">
             <div class="hud-top">
                 <span class="hud-tag">[ WHO WE ARE ]</span>
-                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
-                    <span class="sound-pill">
-                        <span class="sound-icon-symbol">🔇</span>
-                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
-                    </span>
-                </button>
             </div>
 
             <div class="hud-center" data-action="toggle-play">
@@ -117,18 +77,12 @@
     <section class="fullscreen-section video-scene-section" id="skit-video" data-video-section>
         <div class="video-media-wrapper">
             <video class="video-bg-ambient" src="Skit.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
-            <video class="video-foreground" src="Skit.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Skit Introduction Video"></video>
+            <video class="video-foreground" src="Skit.mp4" playsinline webkit-playsinline loop preload="auto" aria-label="Skit Introduction Video"></video>
         </div>
 
         <div class="video-overlay-hud">
             <div class="hud-top">
                 <span class="hud-tag">[ 01 • ART FORM ]</span>
-                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
-                    <span class="sound-pill">
-                        <span class="sound-icon-symbol">🔇</span>
-                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
-                    </span>
-                </button>
             </div>
 
             <div class="hud-center" data-action="toggle-play">
@@ -165,18 +119,12 @@
     <section class="fullscreen-section video-scene-section" id="streetplay-video" data-video-section>
         <div class="video-media-wrapper">
             <video class="video-bg-ambient" src="Streetplay.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
-            <video class="video-foreground" src="Streetplay.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Street Play Introduction Video"></video>
+            <video class="video-foreground" src="Streetplay.mp4" playsinline webkit-playsinline loop preload="auto" aria-label="Street Play Introduction Video"></video>
         </div>
 
         <div class="video-overlay-hud">
             <div class="hud-top">
                 <span class="hud-tag">[ 02 • ART FORM ]</span>
-                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
-                    <span class="sound-pill">
-                        <span class="sound-icon-symbol">🔇</span>
-                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
-                    </span>
-                </button>
             </div>
 
             <div class="hud-center" data-action="toggle-play">
@@ -213,18 +161,12 @@
     <section class="fullscreen-section video-scene-section" id="madads-video" data-video-section>
         <div class="video-media-wrapper">
             <video class="video-bg-ambient" src="Mad-Ads.mp4" playsinline webkit-playsinline loop muted aria-hidden="true"></video>
-            <video class="video-foreground" src="Mad-Ads.mp4" playsinline webkit-playsinline loop muted preload="auto" aria-label="Mad Ads Introduction Video"></video>
+            <video class="video-foreground" src="Mad-Ads.mp4" playsinline webkit-playsinline loop preload="auto" aria-label="Mad Ads Introduction Video"></video>
         </div>
 
         <div class="video-overlay-hud">
             <div class="hud-top">
                 <span class="hud-tag">[ 03 • ART FORM ]</span>
-                <button class="scene-sound-btn" aria-label="Toggle Sound" data-action="toggle-sound">
-                    <span class="sound-pill">
-                        <span class="sound-icon-symbol">🔇</span>
-                        <span class="sound-status-label">MUTED • TAP TO UNMUTE</span>
-                    </span>
-                </button>
             </div>
 
             <div class="hud-center" data-action="toggle-play">
