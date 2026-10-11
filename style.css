@@ -296,6 +296,43 @@ img, video {
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
+/* Sound Unblock Pill - Appears only when browser restricts initial autoplay audio */
+.sound-unblock-pill {
+    pointer-events: auto;
+    background: var(--yellow);
+    color: var(--black);
+    border: 2px solid var(--black);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    padding: 6px 14px;
+    border-radius: 40px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px var(--yellow-glow);
+    animation: soundPulse 2s infinite ease-in-out;
+    transition: transform 0.2s;
+}
+
+.sound-unblock-pill:hover {
+    transform: scale(1.08);
+}
+
+.sound-pill-icon {
+    font-size: 0.9rem;
+}
+
+.video-scene-section.sound-blocked .sound-unblock-pill {
+    display: flex;
+}
+
+@keyframes soundPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
 /* Tap-to-play center pulse icon */
 .hud-center {
     pointer-events: auto;
@@ -804,8 +841,8 @@ img, video {
 /* ---------------- FLOATING AUDITIONS BUTTON ---------------- */
 .floating-register-btn {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 75px;
+    right: 24px;
     background-color: var(--yellow);
     color: var(--black);
     font-family: var(--font-heading);
@@ -870,8 +907,8 @@ img, video {
     }
 
     .floating-register-btn {
-        top: 14px;
-        right: 14px;
+        top: 65px;
+        right: 16px;
         padding: 6px 12px;
     }
 

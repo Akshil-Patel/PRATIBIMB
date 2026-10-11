@@ -39,31 +39,61 @@ document.addEventListener("DOMContentLoaded", () => {
     }, "-=0.2");
 
     // ==========================================
-    // 2. USER GESTURE UNMUTED AUDIO UNLOCKER
+    // 2. BULLETPROOF UNMUTED AUDIO SYSTEM
     // ==========================================
-    // Browsers require a user interaction (click/touch/scroll) before unmuted playback
-    let userHasInteracted = false;
-    const unlockAudio = () => {
-        if (userHasInteracted) return;
-        userHasInteracted = true;
+    let audioUnlocked = false;
+
+    // Wake up Web Audio context if available
+    let audioCtx = null;
+    const unlockWebAudio = () => {
+        try {
+            if (!audioCtx) {
+                const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtxClass) audioCtx = new AudioCtxClass();
+            }
+            if (audioCtx && audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+        } catch (e) {}
+    };
+
+    const enableAllAudio = () => {
+        audioUnlocked = true;
+        unlockWebAudio();
+
         document.querySelectorAll(".video-foreground").forEach((v) => {
             v.muted = false;
+            v.volume = 1.0;
         });
+
         if (currentlyActiveSection) {
             const activeFg = currentlyActiveSection.querySelector(".video-foreground");
             if (activeFg) {
                 activeFg.muted = false;
+                activeFg.volume = 1.0;
                 activeFg.play().catch(() => {});
             }
+            currentlyActiveSection.classList.remove("sound-blocked");
         }
     };
 
-    ["pointerdown", "click", "touchstart", "keydown", "wheel"].forEach((evt) => {
-        window.addEventListener(evt, unlockAudio, { once: true, passive: true });
+    // User interactions recognized by browser security policy (click, touch, key)
+    ["click", "pointerdown", "touchend", "keydown"].forEach((evt) => {
+        window.addEventListener(evt, enableAllAudio, { passive: true });
     });
 
+    // Clicking hero prompt unlocks audio and smoothly scrolls to intro
+    const heroScrollPrompt = document.getElementById("heroScrollPrompt");
+    if (heroScrollPrompt) {
+        heroScrollPrompt.style.cursor = "pointer";
+        heroScrollPrompt.addEventListener("click", () => {
+            enableAllAudio();
+            document.getElementById("intro-video")?.scrollIntoView({ behavior: "smooth" });
+        });
+    }
+
     // ==========================================
-    // 3. FULLSCREEN VIDEOS - STICK TO TOP & AUTOPLAY (UNMUTED)
+    // 3. FULLSCREEN VIDEOS - STICK TO TOP & PLAY UNMUTED
     // ==========================================
     let currentlyActiveSection = null;
     const videoSections = document.querySelectorAll("[data-video-section]");
@@ -74,18 +104,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const bgVideo = section.querySelector(".video-bg-ambient");
 
         if (fgVideo) {
-            // Keep videos unmuted only
+            // Unmuted volume at 100%
             fgVideo.muted = false;
+            fgVideo.volume = 1.0;
             
             const playPromise = fgVideo.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     section.classList.add("is-playing");
-                    section.classList.remove("is-paused");
+                    section.classList.remove("is-paused", "sound-blocked");
                 }).catch((err) => {
-                    console.log("Unmuted autoplay restricted prior to interaction. Retrying on user interaction:", err);
-                    // Fallback: play muted temporarily until interaction, then unlockAudio() unmutes it immediately
+                    console.log("Unmuted autoplay restricted prior to user gesture. Playing muted until tap:", err);
+                    // Temporarily play muted until user taps, but show sound prompt
                     fgVideo.muted = true;
+                    section.classList.add("sound-blocked");
                     fgVideo.play().then(() => {
                         section.classList.add("is-playing");
                         section.classList.remove("is-paused");
@@ -138,19 +170,32 @@ document.addEventListener("DOMContentLoaded", () => {
         const timelineBar = section.querySelector(".hud-timeline-bar");
         const playBtn = section.querySelector(".play-pause-action");
         const hudCenter = section.querySelector(".hud-center");
+        const soundUnblockBtn = section.querySelector(".sound-unblock-pill");
 
         // Keep foreground video unmuted by default
-        if (fgVideo) fgVideo.muted = false;
+        if (fgVideo) {
+            fgVideo.muted = false;
+            fgVideo.volume = 1.0;
+        }
+
+        // Tap unblock sound pill
+        if (soundUnblockBtn) {
+            soundUnblockBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                enableAllAudio();
+            });
+        }
 
         // Tap on video or center or play button to toggle play/pause
         const handlePlayToggle = (e) => {
             if (e) e.stopPropagation();
             if (!fgVideo) return;
 
-            unlockAudio();
+            enableAllAudio();
 
             if (fgVideo.paused) {
                 fgVideo.muted = false;
+                fgVideo.volume = 1.0;
                 fgVideo.play().then(() => {
                     section.classList.add("is-playing");
                     section.classList.remove("is-paused");
@@ -182,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (timelineBar && fgVideo) {
             timelineBar.addEventListener("click", (e) => {
                 e.stopPropagation();
-                unlockAudio();
+                enableAllAudio();
                 const rect = timelineBar.getBoundingClientRect();
                 const pos = (e.clientX - rect.left) / rect.width;
                 if (fgVideo.duration) {
@@ -305,11 +350,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === " " && !lightboxModal.classList.contains("is-open")) {
             if (currentlyActiveSection) {
                 e.preventDefault();
-                unlockAudio();
+                enableAllAudio();
                 const fg = currentlyActiveSection.querySelector(".video-foreground");
                 if (fg) {
                     if (fg.paused) {
                         fg.muted = false;
+                        fg.volume = 1.0;
                         fg.play();
                         currentlyActiveSection.classList.add("is-playing");
                         currentlyActiveSection.classList.remove("is-paused");
